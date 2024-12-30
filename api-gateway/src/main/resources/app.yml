@@ -1,0 +1,11 @@
+gateway:
+  routes:
+    - id: product-service-route
+      uri: http://product-service
+      path: /product/**
+    - id: order-service-route
+      uri: http://order-service
+      path: /api/order/**
+    - id: inventory-service-route
+      uri: http://inventory-service
+      path: /inventory/**

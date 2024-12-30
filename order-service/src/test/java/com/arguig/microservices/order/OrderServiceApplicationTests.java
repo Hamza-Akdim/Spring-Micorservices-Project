@@ -9,12 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.testcontainers.containers.MySQLContainer;
 
 import java.math.BigDecimal;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWireMock(port = 0) // start a wiremock server for test in a random port
+@EmbeddedKafka(partitions = 1, topics = {"order-placed"})
+@EnableKafka
 class OrderServiceApplicationTests {
 
     @ServiceConnection
@@ -40,7 +44,11 @@ class OrderServiceApplicationTests {
                 {
                      "skuCode": "iphone_15",
                      "price": 1000,
-                     "quantity": 1
+                     "quantity": 1,
+                     "userDetails": {
+                        "email": "test@example.com",
+                        "name": "Test"
+                     }
                 }
                 """;
 
